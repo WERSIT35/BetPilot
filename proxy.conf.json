@@ -1,0 +1,13 @@
+{
+  "/api": {
+    "target": "https://api.football-data.org",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/v4"
+    },
+    "headers": {
+      "X-Auth-Token": "acf1dab3e3b74d6485b5aa1867a4383e"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+<section class="splide splide-tips" aria-labelledby="carousel-heading">
+  <h2 id="carousel-heading" class="visually-hidden">Select League</h2>
+  <div class="splide__track">
+    <ul class="splide__list">
+      <li 
+        *ngFor="let league of leagues" 
+        class="splide__slide"
+        [class.active]="selectedLeagueId === leagueIdMap[league.name]"
+        (click)="onLeagueClick(league.name)"
+        style="cursor: pointer;"
+        [attr.title]="league.name"
+        tabindex="0"
+        (keydown.enter)="onLeagueClick(league.name)"
+      >
+        <img [src]="league.imgUrl" [alt]="league.name" />
+        <p>{{ league.name }}</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div *ngIf="loading" class="loading-spinner">
+  Loading matches...
+</div>
+
+<div *ngIf="error" class="error-message" role="alert" aria-live="assertive">
+  {{ error }}
+</div>
+
+<div *ngIf="!loading && matches.length > 0">
+  <h2>Upcoming {{ getLeagueNameFromId(selectedLeagueId) }} Matches</h2>
+  <ul class="matches-list">
+    <li *ngFor="let match of matches" class="match-item">
+      <img
+        [src]="getTeamLogo(match.homeTeam.id)"
+        [alt]="match.homeTeam.name"
+        class="team-logo"
+        (error)="onImgError($event)"
+      />
+      <span class="team-name">{{ match.homeTeam.name }}</span>
+
+      <span class="vs">vs</span>
+
+      <img
+        [src]="getTeamLogo(match.awayTeam.id)"
+        [alt]="match.awayTeam.name"
+        class="team-logo"
+        (error)="onImgError($event)"
+      />
+      <span class="team-name">{{ match.awayTeam.name }}</span>
+
+      <span class="match-date"> — {{ match.utcDate | date: 'short' }}</span>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!loading && matches.length === 0 && !error" class="no-matches">
+  No upcoming matches found
+</div>

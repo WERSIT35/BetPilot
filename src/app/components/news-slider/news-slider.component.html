@@ -1,0 +1,17 @@
+<section class="splide" aria-labelledby="carousel-heading">
+  <div class="splide__track">
+    <ul class="splide__list">
+      @for (item of newsList; track $index) {
+      <li class="splide__slide" routerLink="">
+        <div class="item">
+          <img [src]="item.imageUrl" alt="" />
+          <div class="text-overlay">
+            <h1>{{ item.title }}</h1>
+            <p>{{ item.description }}</p>
+          </div>
+        </div>
+      </li>
+      }
+    </ul>
+  </div>
+</section>
